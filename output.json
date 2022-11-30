@@ -1,0 +1,25 @@
+{
+    'token': 'Y81SdHXPsum4pemSEGseJdfK', 
+    'team_id': 'T026AN50K', 
+    'api_app_id': 'A041VJ7TT8W', 
+    'event': {
+        'client_msg_id': '0b9f2ae5-9f22-4ec0-9958-e86e64f81ff8', 
+        'type': 'message', 
+        'text': 'test', 
+        'user': 'U03LDG4JR5Z', 
+        'ts': '1669831184.418469', 
+        'blocks': [
+            {'type': 'rich_text', 'block_id': 'cybed', 'elements': [
+                    {'type': 'rich_text_section', 'elements': [
+                            {'type': 'text', 'text': 'test'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ], 'team': 'T026AN50K', 'channel': 'C042357Q7NF', 'event_ts': '1669831184.418469', 'channel_type': 'group'
+    }, 'type': 'event_callback', 'event_id': 'Ev04CYRHMFAS', 'event_time': 1669831184, 'authorizations': [
+        {'enterprise_id': None, 'team_id': 'T026AN50K', 'user_id': 'U0420AZFH1T', 'is_bot': True, 'is_enterprise_install': False
+        }
+    ], 'is_ext_shared_channel': False, 'event_context': '4-eyJldCI6Im1lc3NhZ2UiLCJ0aWQiOiJUMDI2QU41MEsiLCJhaWQiOiJBMDQxVko3VFQ4VyIsImNpZCI6IkMwNDIzNTdRN05GIn0'
+}

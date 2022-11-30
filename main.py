@@ -1,5 +1,6 @@
 import json
 import re
+import dalle
 
 from datetime import date
 from slack_bolt import App
@@ -14,79 +15,58 @@ app = App(
     token=slackData["bot_oauth_token"],
 )
 
-subjectAndSrcAToDestChannelMappings = {
-    ("Algolia CLI Metrics", "C042357Q7NF"): "C0417DU5MPH"
-}
 
-
-def matchMessageToMappingGuard(body):
-    # Guard on has event
-    if not (body.get("event")):
+def getPromptAndImageURLFromMessageBody(body):
+    # Guard on user is me
+    if not body.get("event").get("user") == slackData["me"]:
         return
 
-    # Guard on has files
-    if not (body.get("event").get("files") and
-            len(body.get("event").get("files")) > 0):
+    # Guard on channel exists
+    channel = body.get("event").get("channel")
+    if not channel:
         return
 
-    # Guard on username is "Email"
-    if not body.get("event").get("files")[0].get("username") == "Email":
+    # Guard on command is !dalle
+    text = body.get("event").get("text")
+    if not text:
+        return
+    if not text.split(" ")[0] == "!dalle":
         return
 
-    # Guard on Sender = no-reply@tableau.com
-    if not (body.get("event").get("files")[0].get("from") and
-            len(body.get("event").get("files")[0].get("from")) > 0 and
-            body.get("event").get("files")[0].get("from")[0].get("address") == "no-reply@tableau.com"):
-        return
+    # Extract prompt and get image url
 
-    # Guard on Subject exists
-    if not (body.get("event").get("files")[0].get("subject")):
-        return
+    prompt = " ".join(text.split(" ")[1:])
 
-    # Guard on Channel exists
-    if not (body.get("event").get("channel")):
-        return
+    imageUrl = dalle.getImageUrl(prompt)
 
-    # Extract subject, imageUrl, sourceChannel, destinationChannel
-    subject = body.get("event").get("files")[0].get("subject")
-    imageUrl = re.search(r"<img src=\"(.*?)\">", str(body)).group(1)
-    sourceChannel = body.get("event").get("channel")
-
-    # Guard on no (subject, sourceChannel) -> destinationChannel mapping
-    destinationChannel = subjectAndSrcAToDestChannelMappings.get(
-        (subject, sourceChannel))
-    if not destinationChannel:
-        return
-
-    return (subject, imageUrl, destinationChannel)
+    return (prompt, imageUrl, channel)
 
 
-@ app.event("message")
+@app.event("message")
 def handle_message_events(body, say):
-    match = matchMessageToMappingGuard(body)
+    print(body.get("event").get("user"))
+    print(body.get("event").get("text"))
 
-    title, imageUrl, destinationChannel = match
-    headerText = title + " - " + str(date.today())
+    result = getPromptAndImageURLFromMessageBody(body)
+    if not result:
+        return
+
+    prompt, imageUrl, channel = result
+
+    headerText = prompt
     blocks = [
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": headerText
-            }
-        },
         {
             "type": "image",
             "title": {
                 "type": "plain_text",
-                "text": title,
+                "text": prompt,
             },
             "image_url": imageUrl,
-            "alt_text": title
+            "alt_text": prompt
         },
 
     ]
-    say(text=headerText, blocks=blocks, channel=destinationChannel)
+    say(text=headerText, blocks=blocks, channel=channel)
 
 
 if __name__ == "__main__":

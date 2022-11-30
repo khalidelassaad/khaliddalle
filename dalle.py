@@ -32,3 +32,4 @@ if __name__ == "__main__":
         fp = open(filepath, 'wb')
         fp.write(response.content)
         fp.close()
+        print(filepath)

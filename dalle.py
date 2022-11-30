@@ -1,5 +1,7 @@
 import os
 import openai
+import sys
+import webbrowser
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,3 +16,9 @@ def getImageUrl(prompt):
     )
     image_url = response['data'][0]['url']
     return image_url
+
+
+if __name__ == "__main__":
+    prompt = " ".join(sys.argv[1:])
+    imageURL = getImageUrl(prompt)
+    webbrowser.open(imageURL)

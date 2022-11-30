@@ -5,11 +5,10 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-response = openai.Completion.create(
-    model="text-davinci-002",
-    prompt="PROMPT GOES HERE",
-    temperature=0.6,
+response = openai.Image.create(
+    prompt="a lone cowboy walks angrily away down a rainy street",
+    n=1,
+    size="512x512"
 )
-
-result = response.choices[0].text
-print(result)
+image_url = response['data'][0]['url']
+print(image_url)

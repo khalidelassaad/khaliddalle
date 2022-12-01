@@ -23,16 +23,36 @@ def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
         mask=open(maskFilePath, "rb"),
         prompt=prompt,
         n=1,
-        size="1024x1024"
+        size="512x512"
+    )
+    image_url = response['data'][0]['url']
+    return image_url
+
+def getUrlFromInput(inputFilePath):
+    response = openai.Image.create_variation(
+        image=open(inputFilePath, "rb"),
+        n=1,
+        size="512x512"
     )
     image_url = response['data'][0]['url']
     return image_url
 
 if __name__ == "__main__":
-    openUrlAndSavePhoto(
-        getUrlFromPromptAndInputAndMask(            
-            "A secret agent lounges on the couch smoking a cigar",
-            "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png",
-            "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\mask.png"
+    try:
+        # prompt = ""
+        # openUrlAndSavePhoto(
+        #     getUrlFromPromptAndInputAndMask(            
+        #         prompt,
+        #         "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png",
+        #         "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\mask.png"
+        #     ),
+        #     prompt
+        # )
+        openUrlAndSavePhoto(
+            getUrlFromInput(            
+                "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png"
+            ),
+            "iterate living room"
         )
-    )
+    except Exception as e:
+        print(e)

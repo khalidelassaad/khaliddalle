@@ -1,6 +1,6 @@
 import pathlib
 import time
-from urllib import request
+import requests
 import webbrowser
 
 
@@ -10,7 +10,7 @@ def openUrlAndSavePhoto(imageURL, prompt):
 
         filename = str(int(time.time())) + "_" + "_".join(prompt.split(" ")) + ".png"
         filepath = pathlib.Path.cwd() / "outputs" / filename
-        response = request.get(imageURL)
+        response = requests.get(imageURL)
         if response.status_code:
             fp = open(filepath, 'wb')
             fp.write(response.content)

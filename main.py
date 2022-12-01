@@ -15,7 +15,7 @@ if __name__ == "__main__":
         imageURL = getUrlFromPrompt(prompt)
         webbrowser.open(imageURL)
 
-        filename = str(int(time.time())) + "_" + prompt + ".png"
+        filename = str(int(time.time())) + "_" + "_".join(prompt.split(" ")) + ".png"
         filepath = pathlib.Path.cwd() / "outputs" / filename
         response = requests.get(imageURL)
         if response.status_code:

@@ -2,6 +2,8 @@ import os
 import openai
 from dotenv import load_dotenv
 
+from saveutil import openUrlAndSavePhoto
+
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -17,9 +19,9 @@ def getUrlFromPrompt(prompt):
 
 def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
     response = openai.Image.create_edit(
-        image=open("sunlit_lounge.png", "rb"),
-        mask=open("mask.png", "rb"),
-        prompt="A sunlit indoor lounge area with a pool containing a flamingo",
+        image=open(inputFilePath, "rb"),
+        mask=open(maskFilePath, "rb"),
+        prompt=prompt,
         n=1,
         size="1024x1024"
     )
@@ -27,8 +29,10 @@ def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
     return image_url
 
 if __name__ == "__main__":
-    getUrlFromPromptAndInputAndMask(
-        "",
-        "",
-        ""
+    openUrlAndSavePhoto(
+        getUrlFromPromptAndInputAndMask(
+            "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png",
+            "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\mask.png",
+            "A secret agent lounges on the couch smoking a cigar"
+        )
     )

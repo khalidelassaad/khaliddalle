@@ -1,5 +1,6 @@
 openai
 requests
+replicate
 python-dotenv
 autopep8
 pycodestyle

@@ -6,13 +6,11 @@ import time
 import requests
 import sys
 
-getUrlFromPrompt = dalle.getImageUrl
-getUrlFromPrompt = sd2.getImageUrl
+getUrlFromPrompt = dalle.getUrlFromPrompt
+# getUrlFromPrompt = sd2.getUrlFromPrompt
 
-if __name__ == "__main__":
+def openUrlAndSavePhoto(imageURL):
     try:
-        prompt = " ".join(sys.argv[1:])
-        imageURL = getUrlFromPrompt(prompt)
         webbrowser.open(imageURL)
 
         filename = str(int(time.time())) + "_" + "_".join(prompt.split(" ")) + ".png"
@@ -23,5 +21,11 @@ if __name__ == "__main__":
             fp.write(response.content)
             fp.close()
             print(filepath)
+    
     except Exception as e:
         print(e)
+
+if __name__ == "__main__":
+        prompt = " ".join(sys.argv[1:])
+        imageURL = getUrlFromPrompt(prompt)
+        openUrlAndSavePhoto(imageURL)

@@ -35,7 +35,7 @@ def getPromptAndImageURLFromMessageBody(body):
 
     prompt = " ".join(text.split(" ")[1:])
 
-    imageUrl = dalle.getImageUrl(prompt)
+    imageUrl = dalle.getUrlFromPrompt(prompt)
 
     return (prompt, imageUrl, channel)
 

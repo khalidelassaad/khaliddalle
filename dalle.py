@@ -12,10 +12,11 @@ def getUrlFromPrompt(prompt):
     response = openai.Image.create(
         prompt=prompt,
         n=1,
-        size="512x512"
+        size="1024x1024"
     )
     image_url = response['data'][0]['url']
     return image_url
+
 
 def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
     response = openai.Image.create_edit(
@@ -28,6 +29,7 @@ def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
     image_url = response['data'][0]['url']
     return image_url
 
+
 def getUrlFromInput(inputFilePath):
     response = openai.Image.create_variation(
         image=open(inputFilePath, "rb"),
@@ -37,11 +39,12 @@ def getUrlFromInput(inputFilePath):
     image_url = response['data'][0]['url']
     return image_url
 
+
 if __name__ == "__main__":
     try:
         # prompt = ""
         # openUrlAndSavePhoto(
-        #     getUrlFromPromptAndInputAndMask(            
+        #     getUrlFromPromptAndInputAndMask(
         #         prompt,
         #         "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png",
         #         "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\mask.png"
@@ -49,7 +52,7 @@ if __name__ == "__main__":
         #     prompt
         # )
         openUrlAndSavePhoto(
-            getUrlFromInput(            
+            getUrlFromInput(
                 "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png"
             ),
             "iterate living room"

@@ -30,9 +30,9 @@ def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
 
 if __name__ == "__main__":
     openUrlAndSavePhoto(
-        getUrlFromPromptAndInputAndMask(
+        getUrlFromPromptAndInputAndMask(            
+            "A secret agent lounges on the couch smoking a cigar",
             "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\original.png",
-            "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\mask.png",
-            "A secret agent lounges on the couch smoking a cigar"
+            "C:\\Users\\Khalid\\Desktop\\khaliddalle\\inputs\\mask.png"
         )
     )

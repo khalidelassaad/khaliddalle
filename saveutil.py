@@ -7,8 +7,10 @@ import webbrowser
 def openUrlAndSavePhoto(imageURL, prompt):
     try:
         webbrowser.open(imageURL)
-
-        filename = str(int(time.time())) + "_" + "_".join(prompt.split(" ")) + ".png"
+        fileSafePrompt = "".join(
+            c for c in prompt if (c.isalnum() or c == " "))
+        filename = str(int(time.time())) + "_" + \
+            "_".join(fileSafePrompt.split(" ")) + ".png"
         filepath = pathlib.Path.cwd() / "outputs" / filename
         response = requests.get(imageURL)
         if response.status_code:
@@ -16,6 +18,6 @@ def openUrlAndSavePhoto(imageURL, prompt):
             fp.write(response.content)
             fp.close()
             print(filepath)
-    
+
     except Exception as e:
         print(e)

@@ -13,7 +13,7 @@ urlFromPromptDict = {
 if __name__ == "__main__":
     try:
         prompt = " ".join(sys.argv[1:])
-        imageURL = urlFromPromptDict["sd2"](prompt)
+        imageURL = urlFromPromptDict["dalle"](prompt)
         openUrlAndSavePhoto(imageURL, prompt)
     except Exception as e:
         print(e)

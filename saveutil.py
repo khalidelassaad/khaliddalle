@@ -2,6 +2,7 @@ import pathlib
 import time
 import requests
 import webbrowser
+from inspect import getsourcefile
 
 
 def openUrlAndSavePhoto(imageURL, prompt, index):
@@ -11,10 +12,16 @@ def openUrlAndSavePhoto(imageURL, prompt, index):
     filename = str(int(time.time())) + "_" + \
         str(index) + "_" + \
         "_".join(fileSafePrompt.split(" ")) + ".png"
-    filepath = pathlib.Path.cwd() / "outputs" / filename
+    filepath = ((pathlib.Path(getsourcefile(lambda: 0)).parent /
+                "outputs") / filename).resolve()
     response = requests.get(imageURL)
     if response.status_code:
         fp = open(filepath, 'wb')
         fp.write(response.content)
         fp.close()
         print(filepath)
+
+
+if __name__ == "__main__":
+    print(((pathlib.Path(getsourcefile(lambda: 0)).parent /
+          "outputs") / "image.png").resolve())

@@ -17,7 +17,7 @@ args = parser.parse_args()
 
 
 urlFromPromptDict = {
-    "dalle": dalle.getUrlListFromPrompt,  # TODO: add optional index and handle count
+    "dalle": dalle.getUrlListFromPrompt,
     "sd2": sd2.getUrlFromPrompt  # TODO: add optional index and handle count
 }
 

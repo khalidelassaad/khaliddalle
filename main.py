@@ -17,16 +17,13 @@ args = parser.parse_args()
 
 
 urlFromPromptDict = {
-    "dalle": dalle.getUrlFromPrompt,  # TODO: add optional index and handle count
+    "dalle": dalle.getUrlListFromPrompt,  # TODO: add optional index and handle count
     "sd2": sd2.getUrlFromPrompt  # TODO: add optional index and handle count
 }
 
 if __name__ == "__main__":
     prompt = " ".join(args.prompt)
-    count = args.number
-    try:
-        imageURLs = urlFromPromptDict[CURRENT_MODEL](prompt, count)
-        for imageURL, index in enumerate(imageURLs):
-            openUrlAndSavePhoto(imageURL, prompt, index)
-    except Exception as e:
-        print(e)
+    count = int(args.number)
+    imageURLs = urlFromPromptDict[CURRENT_MODEL](prompt, count)
+    for index, imageURL in enumerate(imageURLs):
+        openUrlAndSavePhoto(imageURL, prompt, index)

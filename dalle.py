@@ -8,14 +8,16 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def getUrlFromPrompt(prompt):
+def getUrlListFromPrompt(prompt, count):
+    imageURLs = []
     response = openai.Image.create(
         prompt=prompt,
-        n=1,
+        n=count,
         size="1024x1024"
     )
-    image_url = response['data'][0]['url']
-    return image_url
+    for urlObject in response['data']:
+        imageURLs.append(urlObject['url'])
+    return imageURLs
 
 
 def getUrlFromPromptAndInputAndMask(prompt, inputFilePath, maskFilePath):
